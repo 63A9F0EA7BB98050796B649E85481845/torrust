@@ -45,7 +45,7 @@ pub struct Login {
     pub password: String,
 }
 
-    pub async fn register(req: HttpRequest, mut payload: web::Json<Register>, app_data: WebAppData) -> ServiceResult<impl Responder> {
+pub async fn register(req: HttpRequest, mut payload: web::Json<Register>, app_data: WebAppData) -> ServiceResult<impl Responder> {
     let settings = app_data.cfg.settings.read().await;
 
     match settings.auth.email_on_signup {
@@ -122,7 +122,7 @@ pub struct Login {
 
     let conn_info = req.connection_info();
 
-    if settings.mail.email_verification_enabled && payload.email.is_some() {
+     if settings.mail.email_verification_enabled && payload.email.is_some() {
         let mail_res = app_data.mailer.send_verification_mail(
             &payload.email.as_ref().unwrap(),
             &payload.username,

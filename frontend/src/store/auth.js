@@ -55,13 +55,11 @@ export default {
         }
     },
     actions: {
-        async login({dispatch, state, commit, getters}, data) {
-            await HttpService.post('/user/login', data, async (res) => {
-
+         async login({dispatch, state, commit, getters}, data) {
+             await HttpService.post('/user/login', data, async (res) => {
                 const data = res.data.data;
 
-                await commit('authSuccess', data);
-
+                 await commit('authSuccess', data);
             });
 
             if (getters.isAdministrator) {

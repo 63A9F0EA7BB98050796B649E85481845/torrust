@@ -8,7 +8,8 @@
       <FilterCategory :update-category-filters="updateCategoryFilters" :filters="filters"/>
       <ChangePageSize :update-page-size="updatePageSize" />
     </div>
-    <TorrentList id="tList" class="mt-4" v-if="torrents.results.length > 0" :torrents="torrents.results" :sorting="sorting" :update-sorting="updateSorting"/>
+
+    <TorrentList id="TorrentList" class="mt-4" v-if="torrents.results.length > 0" :torrents="torrents.results" :sorting="sorting" :update-sorting="updateSorting"/>
     <Pagination v-if="torrents.results.length > 0" :current-page.sync="currentPage" :total-pages="totalPages" :total-results="torrents.total" :page-size="pageSize" />
     <div v-else class="py-6 text-slate-400">This category has no results.</div>
   </div>
@@ -70,6 +71,7 @@ export default {
       this.$router.replace({ query: {...this.$route.query, search: ''}})
     },
     updateSorting(sorting) {
+      this.currentPage = Math.floor((this.currentPage - 1) * this.pageSize / pageSize) + 1;
       this.sorting = sorting;
       this.loadTorrents(this.currentPage);
     },
@@ -102,7 +104,7 @@ export default {
     },
     currentPage(newPage) {
       this.loadTorrents(newPage, this.sorting);
-      document.getElementById("tList").scrollIntoView({behavior: "smooth"});
+      document.getElementById("TorrentList").scrollIntoView({behavior: "smooth"});
     },
     categoryFilters(filter) {
       this.currentPage = 1;

@@ -21,6 +21,7 @@ export default {
   },
   watch:{
     $route (to, from){
+      this.$store.dispatch('getPublicSettings');
       this.$store.dispatch('getCategories');
       this.$store.dispatch('getSiteName');
     }
